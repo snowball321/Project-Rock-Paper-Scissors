@@ -8,27 +8,36 @@ function playRound(playerSelection,computerSelection){
         let youPick=playerSelection.toUpperCase()
         let computerPick=computerSelection.toUpperCase()
     if (youPick==computerPick){
-        return "Draw!"
+        return 0
     }
     else if(youPick=="ROCK"&&computerPick=="PAPER"){
-        return "You Lose! Paper beats Rock"
+        return -1
     }
     else if(youPick=="PAPER"&&computerPick=="SCISSORS"){
-        return "You Lose! Scissors beats Paper "
+        return -1
     }
     else if(youPick=="SCISSORS"&&computerPick=="ROCK"){
-        return "You Lose! Rock beats Scissors"
+        return -1
     }
     else{
-        return "You Won!"
+        return 1
     }
 
 }
-function game(){
-    let n=1
-    for (let i=0;i<5;i++){
-        let result =playRound(prompt("Your choice:"),getComputerChoice())
-        console.log(`Round${n}: ${result}`)
-        n++
+let score=0
+const buttons=document.querySelectorAll("button")
+buttons.forEach(button=>button.addEventListener('click',(event)=>{
+    const Button = event.target.getAttribute("data-name");
+    let result=playRound(Button,getComputerChoice())
+    let div1=document.querySelector('.result')
+    score+=result
+    if (score===3){
+        alert('You Won!')
     }
-}
+    else if(score==-3){
+        alert('You Lose!')
+    }
+    div1.innerHTML=`Your choice: ${Button}<br>Current score: ${score}`
+}))
+
+  
